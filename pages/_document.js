@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 export default function Document() {
   return (
@@ -17,9 +18,10 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        {/* plugin JS */}
-        <script src="../styles/assets/js/jquery.min.js"></script>
-        <script src="../styles/assets/js/pace.min.js"></script>
+
+        {/* plugin JS menggunakan next/script */}
+        <Script src="/styles/assets/js/jquery.min.js" strategy="afterInteractive" />
+        <Script src="/styles/assets/js/pace.min.js" strategy="afterInteractive" />
       </body>
     </Html>
   )
