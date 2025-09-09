@@ -1,9 +1,10 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="section-authentication-cover">
       <div className="">
         <div className="row g-0">
-
           {/* left side */}
           <div className="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex border-end bg-transparent">
             <div className="card rounded-0 mb-0 border-0 shadow-none bg-transparent bg-none">
@@ -31,27 +32,6 @@ export default function Home() {
                 <h4 className="fw-bold">Login</h4>
                 <p className="mb-0">Masukkan kredensial Anda untuk masuk ke akun Anda</p>
 
-                {/* <div className="row g-3 my-4">
-                  <div className="col-12 col-lg-6">
-                    <button className="btn btn-light py-2 font-text1 fw-bold d-flex align-items-center justify-content-center w-100">
-                      <img src="/assets/images/apps/05.png" width="20" className="me-2" alt="" />
-                      Google
-                    </button>
-                  </div>
-                  <div className="col col-lg-6">
-                    <button className="btn btn-light py-2 font-text1 fw-bold d-flex align-items-center justify-content-center w-100">
-                      <img src="/assets/images/apps/17.png" width="20" className="me-2" alt="" />
-                      Facebook
-                    </button>
-                  </div>
-                </div> */}
-
-                {/* <div className="separator section-padding">
-                  <div className="line"></div>
-                  <p className="mb-0 fw-bold">OR</p>
-                  <div className="line"></div>
-                </div> */}
-
                 <div className="form-body mt-4">
                   <form className="row g-3">
                     <div className="col-12">
@@ -74,7 +54,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-md-6 text-end">
-                      <a href="auth-cover-forgot-password.html">Forgot Password ?</a>
+                      <Link href="auth-cover-forgot-password.html">Forgot Password ?</Link>
                     </div>
                     <div className="col-12">
                       <div className="d-grid">
@@ -84,7 +64,7 @@ export default function Home() {
                     <div className="col-12">
                       <div className="text-start">
                         <p className="mb-0">
-                          Don't have an account yet? <a href="/register">Sign up here</a>
+                          Don&apos;t have an account yet? <Link href="/register">Sign up here</Link>
                         </p>
                       </div>
                     </div>

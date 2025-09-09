@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function NotifSuccessRegister() {
   const router = useRouter();
@@ -47,9 +48,9 @@ export default function NotifSuccessRegister() {
               </p>
 
               <div className="mt-4 d-flex align-items-center justify-content-center gap-3">
-                <a href="/" className="btn btn-grd-info rounded-5 px-4">
+                <Link href="/" className="btn btn-grd-info rounded-5 px-4">
                   <i className="bi bi-house-fill me-2"></i>Go To Login
-                </a>
+                </Link>
               </div>
 
               <div className="mt-4">
@@ -57,15 +58,15 @@ export default function NotifSuccessRegister() {
               </div>
               <hr className="border-light border-2" />
               <div className="list-inline contacts-social mt-4">
-                <a href="#" className="list-inline-item bg-facebook text-white border-0">
+                <Link href="#" className="list-inline-item bg-facebook text-white border-0">
                   <i className="bi bi-facebook"></i>
-                </a>
-                <a href="#" className="list-inline-item bg-whatsapp text-white border-0">
+                </Link>
+                <Link href="#" className="list-inline-item bg-whatsapp text-white border-0">
                   <i className="bi bi-whatsapp"></i>
-                </a>
-                <a href="#" className="list-inline-item bg-linkedin text-white border-0">
+                </Link>
+                <Link href="#" className="list-inline-item bg-linkedin text-white border-0">
                   <i className="bi bi-linkedin"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

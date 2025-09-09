@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -80,7 +81,7 @@ export default function Register() {
                   <div className="col-12">
                     <div className="text-start">
                       <p className="mb-0">
-                        Already have an account? <a href="/">Sign in here</a>
+                        Already have an account? <Link href="/">Sign in here</Link>
                       </p>
                     </div>
                   </div>
