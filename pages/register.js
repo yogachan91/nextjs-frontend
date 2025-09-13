@@ -5,10 +5,12 @@ import { useState } from "react";
 export default function Register() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null); // state untuk error
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null); // reset error setiap submit
 
     const formData = {
       first_name: e.target.first_name.value,
@@ -32,11 +34,12 @@ export default function Register() {
         );
         router.push("/notif-success-register");
       } else {
-        alert("Register gagal. Cek input atau server API.");
+        const data = await res.json(); // ambil pesan error dari API
+        setErrorMessage(data.error || "Register gagal. Cek input atau server API.");
       }
     } catch (err) {
       console.error("Error register:", err);
-      alert("Terjadi error saat register.");
+      setErrorMessage("Terjadi error saat register.");
     } finally {
       setLoading(false);
     }
@@ -49,31 +52,87 @@ export default function Register() {
           {/* Left Side */}
           <div className="col-lg-6 d-flex">
             <div className="card-body">
-              <img src="/assets/images/logo-kloosing.jpeg" className="mb-4" width="145" alt="Logo" />
+              <img
+                src="/assets/images/logo-kloosing.jpeg"
+                className="mb-4"
+                width="145"
+                alt="Logo"
+              />
               <h4 className="fw-bold">Ayo Register Sekarang</h4>
               <p className="mb-0">Masukan data anda untuk membuat akun user</p>
+
+              {/* ALERT ERROR */}
+              {errorMessage && (
+                <div className="alert alert-danger border-0 bg-grd-danger alert-dismissible fade show mt-3">
+                  <div className="d-flex align-items-center">
+                    <div className="font-35 text-white">
+                      <span className="material-icons-outlined fs-2">
+                        report_gmailerrorred
+                      </span>
+                    </div>
+                    <div className="ms-3">
+                      <h6 className="mb-0 text-white">Error</h6>
+                      <div className="text-white">{errorMessage}</div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              )}
 
               <div className="form-body mt-4">
                 <form className="row g-3" onSubmit={handleSubmit}>
                   <div className="col-12">
                     <label className="form-label">First Name</label>
-                    <input type="text" name="first_name" className="form-control" placeholder="Enter First Name" required />
+                    <input
+                      type="text"
+                      name="first_name"
+                      className="form-control"
+                      placeholder="Enter First Name"
+                      required
+                    />
                   </div>
                   <div className="col-12">
                     <label className="form-label">Last Name</label>
-                    <input type="text" name="last_name" className="form-control" placeholder="Enter Last Name" required />
+                    <input
+                      type="text"
+                      name="last_name"
+                      className="form-control"
+                      placeholder="Enter Last Name"
+                      required
+                    />
                   </div>
                   <div className="col-12">
                     <label className="form-label">Email</label>
-                    <input type="email" name="email" className="form-control" placeholder="example@user.com" required />
+                    <input
+                      type="email"
+                      name="email"
+                      className="form-control"
+                      placeholder="example@user.com"
+                      required
+                    />
                   </div>
                   <div className="col-12">
                     <label className="form-label">Password</label>
-                    <input type="password" name="password" className="form-control" placeholder="Enter Password" required />
+                    <input
+                      type="password"
+                      name="password"
+                      className="form-control"
+                      placeholder="Enter Password"
+                      required
+                    />
                   </div>
                   <div className="col-12">
                     <div className="d-grid">
-                      <button type="submit" className="btn btn-grd-info" disabled={loading}>
+                      <button
+                        type="submit"
+                        className="btn btn-grd-info"
+                        disabled={loading}
+                      >
                         {loading ? "Processing..." : "Register"}
                       </button>
                     </div>
@@ -93,7 +152,11 @@ export default function Register() {
           {/* Right Side */}
           <div className="col-lg-6 d-lg-flex d-none">
             <div className="p-3 rounded-4 w-100 d-flex align-items-center justify-content-center bg-grd-info">
-              <img src="/assets/images/auth/register1.png" className="img-fluid" alt="Register" />
+              <img
+                src="/assets/images/auth/register1.png"
+                className="img-fluid"
+                alt="Register"
+              />
             </div>
           </div>
         </div>
