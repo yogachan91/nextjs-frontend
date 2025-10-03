@@ -6,17 +6,12 @@ export default function Verify() {
   const router = useRouter();
   const { token } = router.query;
 
-  const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState(null); 
+  const [status, setStatus] = useState(null);
   // status = { success: boolean, message: string }
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
+    if (!router.isReady) return; // pastikan router siap dulu
 
     // jika token tidak ada atau kosong, redirect ke halaman utama
     if (!token || token.trim() === "") {
@@ -54,9 +49,9 @@ export default function Verify() {
     };
 
     fetchActivation();
-  }, [mounted, token, router]);
+  }, [router.isReady, token, router]);
 
-  if (!mounted || loading) {
+  if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
         <div className="text-center">
