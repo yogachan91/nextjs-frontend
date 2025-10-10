@@ -5,11 +5,12 @@ export default function Dashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  // ✅ Proteksi route: kalau tidak ada access_token, redirect ke login
+  // ✅ Proteksi route setiap kali halaman dibuka ulang (termasuk via tombol back)
   useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (!accessToken) {
-      router.push("/");
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      console.log("⛔ Tidak ada token, tendang ke login");
+      router.replace("/"); // ⚡ gunakan replace supaya tidak bisa back ke dashboard lagi
     }
   }, [router]);
 
@@ -23,7 +24,7 @@ export default function Dashboard() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`, // ✅ Tambahkan Bearer Token di sini
+          "Authorization": `Bearer ${accessToken}`,
         },
         body: JSON.stringify({ refresh_token: refreshToken }),
       });
@@ -31,9 +32,8 @@ export default function Dashboard() {
       if (res.ok) {
         console.log("✅ Logout berhasil");
         localStorage.clear();
-        router.push("/");
+        router.replace("/"); // ✅ gunakan replace agar back button tidak bisa kembali ke dashboard
       } else {
-        // ✅ Kalau error, gunakan res.text() agar tidak error jika backend kosong
         const text = await res.text();
         console.error("❌ Logout gagal:", res.status, text);
         alert(`Gagal logout (${res.status}). Silakan coba lagi.`);
