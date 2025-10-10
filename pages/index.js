@@ -10,7 +10,7 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(""); // reset error
+    setErrorMessage("");
 
     try {
       const res = await fetch("http://185.14.92.144:8080/api/auth/login", {
@@ -28,15 +28,15 @@ export default function Home() {
         console.log("TOKEN DARI BACKEND:", data.access_token);
         console.log("REFRESH TOKEN DARI BACKEND:", data.refresh_token);
 
-        // ✅ Simpan token ke localStorage
+        // ✅ Simpan token dengan benar
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
         localStorage.setItem("user_id", data.id);
 
-        // 💤 beri sedikit jeda agar token benar-benar tersimpan
+        // ✅ Redirect setelah token benar-benar tersimpan
         setTimeout(() => {
-          router.push("/dashboard");
-        }, 100);
+          window.location.href = "/dashboard";
+        }, 200);
       } else {
         setErrorMessage(data.error || "Login gagal. Coba lagi.");
       }

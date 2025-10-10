@@ -18,6 +18,8 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
+    if (typeof window === "undefined") return; // ⛔ Hindari akses localStorage saat SSR
+
     const protectedRoutes = ["/dashboard"];
     const token = localStorage.getItem("access_token");
 
@@ -28,27 +30,27 @@ export default function MyApp({ Component, pageProps }) {
         const decoded = jwtDecode(token);
         console.log("DECODED TOKEN:", decoded);
 
-        // Cek expired
+        // cek expired
         if (decoded.exp * 1000 < Date.now()) {
           console.log("⚠️ Token expired, auto logout");
           localStorage.clear();
           router.push("/");
         }
       } catch (e) {
-        console.log("⚠️ Token tidak valid saat decode");
+        console.log("⚠️ Token tidak valid saat decode", e);
+        localStorage.clear();
         if (protectedRoutes.includes(router.pathname)) {
-          localStorage.clear();
           router.push("/");
         }
       }
     }
 
-    // Proteksi route jika belum login
+    // proteksi route jika belum login
     if (protectedRoutes.includes(router.pathname) && !token) {
       router.push("/");
     }
 
-    // Kalau sudah login dan buka "/", langsung ke dashboard
+    // jika sudah login & buka "/", redirect ke dashboard
     if (router.pathname === "/" && token) {
       router.push("/dashboard");
     }
