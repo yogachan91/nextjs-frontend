@@ -5,7 +5,7 @@ export default function Dashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  // ✅ Proteksi: kalau tidak ada access_token, tendang ke login
+  // ✅ Proteksi route: kalau tidak ada access_token, redirect ke login
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (!accessToken) {
@@ -16,27 +16,30 @@ export default function Dashboard() {
   const handleLogout = async () => {
     setLoading(true);
     try {
+      const accessToken = localStorage.getItem("access_token");
       const refreshToken = localStorage.getItem("refresh_token");
 
       const res = await fetch("http://185.14.92.144:8080/api/auth/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`, // ✅ Tambahkan Bearer Token di sini
         },
         body: JSON.stringify({ refresh_token: refreshToken }),
       });
 
       if (res.ok) {
-        // ✅ Logout berhasil
+        console.log("✅ Logout berhasil");
         localStorage.clear();
         router.push("/");
       } else {
-        const err = await res.json();
-        console.error("Logout gagal:", err);
-        alert("Gagal logout. Silakan coba lagi.");
+        // ✅ Kalau error, gunakan res.text() agar tidak error jika backend kosong
+        const text = await res.text();
+        console.error("❌ Logout gagal:", res.status, text);
+        alert(`Gagal logout (${res.status}). Silakan coba lagi.`);
       }
     } catch (error) {
-      console.error("Terjadi kesalahan:", error);
+      console.error("⚠️ Terjadi kesalahan saat logout:", error);
       alert("Terjadi kesalahan saat logout.");
     } finally {
       setLoading(false);
