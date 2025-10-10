@@ -167,7 +167,7 @@ export default function Home() {
                     <div className="col-12">
                       <div className="text-start">
                         <p className="mb-0">
-                          Don't have an account yet?{" "}
+                          Don&apos;t have an account yet?{" "}
                           <Link href="/register">Sign up here</Link>
                         </p>
                       </div>
