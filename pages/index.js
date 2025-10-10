@@ -22,8 +22,12 @@ export default function Home() {
       });
 
       const data = await res.json();
+      console.log("RESPON LOGIN:", data);
 
       if (res.ok) {
+        console.log("TOKEN DARI BACKEND:", data.access_token);
+        console.log("REFRESH TOKEN DARI BACKEND:", data.refresh_token);
+
         // ✅ Simpan token ke localStorage
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
@@ -163,7 +167,7 @@ export default function Home() {
                     <div className="col-12">
                       <div className="text-start">
                         <p className="mb-0">
-                          Don&apos;t have an account yet?{" "}
+                          Don't have an account yet?{" "}
                           <Link href="/register">Sign up here</Link>
                         </p>
                       </div>

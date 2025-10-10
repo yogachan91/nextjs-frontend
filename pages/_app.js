@@ -21,11 +21,14 @@ export default function MyApp({ Component, pageProps }) {
     const protectedRoutes = ["/dashboard"];
     const token = localStorage.getItem("access_token");
 
-    // ⏰ Cek token expired atau tidak
+    console.log("TOKEN DI _app.js:", token);
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        // decoded.exp = waktu kadaluarsa dalam detik → kita ubah ke milidetik
+        console.log("DECODED TOKEN:", decoded);
+
+        // Cek expired
         if (decoded.exp * 1000 < Date.now()) {
           console.log("⚠️ Token expired, auto logout");
           localStorage.clear();
@@ -40,12 +43,12 @@ export default function MyApp({ Component, pageProps }) {
       }
     }
 
-    // 🔐 Proteksi route
+    // Proteksi route jika belum login
     if (protectedRoutes.includes(router.pathname) && !token) {
       router.push("/");
     }
 
-    // ⏩ Kalau user sudah login dan buka halaman login (/), redirect ke dashboard
+    // Kalau sudah login dan buka "/", langsung ke dashboard
     if (router.pathname === "/" && token) {
       router.push("/dashboard");
     }
