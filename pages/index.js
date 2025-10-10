@@ -29,8 +29,10 @@ export default function Home() {
         localStorage.setItem("refresh_token", data.refresh_token);
         localStorage.setItem("user_id", data.id);
 
-        // ✅ Redirect ke dashboard
-        router.push("/dashboard");
+        // 💤 beri sedikit jeda agar token benar-benar tersimpan
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 100);
       } else {
         setErrorMessage(data.error || "Login gagal. Coba lagi.");
       }

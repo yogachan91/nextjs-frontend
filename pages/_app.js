@@ -32,9 +32,11 @@ export default function MyApp({ Component, pageProps }) {
           router.push("/");
         }
       } catch (e) {
-        console.log("⚠️ Token tidak valid, auto logout");
-        localStorage.clear();
-        router.push("/");
+        console.log("⚠️ Token tidak valid saat decode");
+        if (protectedRoutes.includes(router.pathname)) {
+          localStorage.clear();
+          router.push("/");
+        }
       }
     }
 
