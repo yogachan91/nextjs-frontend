@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // ✅ perbaikan utama di sini
 
 // ✅ Import semua CSS seperti sebelumnya
 import '@/styles/assets/css/bootstrap.min.css'
@@ -27,27 +27,27 @@ export default function MyApp({ Component, pageProps }) {
 
     if (token) {
       try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(token); // ✅ pakai jwtDecode (bukan jwtDecode default)
         console.log("DECODED TOKEN:", decoded);
 
-        // cek expired
+        // ✅ Cek expired
         if (decoded.exp * 1000 < Date.now()) {
           console.log("⚠️ Token expired, auto logout");
           localStorage.clear();
           router.push("/");
         }
       } catch (e) {
-        console.log("⚠️ Token tidak valid saat decode", e);
+        console.warn("⚠️ Token tidak valid saat decode", e);
         localStorage.clear();
         if (protectedRoutes.includes(router.pathname)) {
           router.push("/");
         }
       }
-    }
-
-    // proteksi route jika belum login
-    if (protectedRoutes.includes(router.pathname) && !token) {
-      router.push("/");
+    } else {
+      // proteksi route jika belum login
+      if (protectedRoutes.includes(router.pathname)) {
+        router.push("/");
+      }
     }
 
     // jika sudah login & buka "/", redirect ke dashboard
